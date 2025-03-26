@@ -1,12 +1,13 @@
 module challenge_1::cat_object;
 
+use std::string::String;
 
 // Challenge: make this struct transferable
-public struct Cat has key {
+public struct Cat has key, store {
     id: UID,
     // Challenge: make the `name` and `color` fields a String type instead of vector<u8>
-    name: vector<u8>,
-    color: vector<u8>
+    name: String,
+    color: String
 }
 
 
