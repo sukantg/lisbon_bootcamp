@@ -23,7 +23,7 @@ public fun new(name: vector<u8>, color: vector<u8>, ctx: &mut TxContext) : Cat{
 
 public fun tchau(cat: Cat) {
     // Challenge: denote that the cat_name and cat_color variables are not going to be used at all in this block
-    let Cat {id, name: cat_name, color: cat_color } = cat;
+    let Cat {id, name: _, color: _ } = cat;
     object::delete(id);
 }
 
