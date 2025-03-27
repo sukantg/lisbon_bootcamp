@@ -12,13 +12,13 @@ public struct Cat has key, store {
 
 
 // Challenge: make this function return the object instead of transfering it
-public fun new(name: vector<u8>, color: vector<u8>, ctx: &mut TxContext) {
+public fun new(name: vector<u8>, color: vector<u8>, ctx: &mut TxContext) : Cat{
     let cat = Cat {
         id: object::new(ctx),
         name: name,
         color: color
     };
-    transfer::transfer(cat, ctx.sender());
+     return cat;
 }
 
 public fun tchau(cat: Cat) {
