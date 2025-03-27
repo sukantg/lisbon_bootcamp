@@ -30,7 +30,6 @@ public fun tchau(cat: Cat) {
 // Challenge: the cat is here is being returned to the caller.
 // Delete the line that transfers the cat back and fix the code.
 // The resulting code should only have one line, the line that changes the color.
-public fun paint(mut cat: Cat, new_color: vector<u8>, ctx: &mut TxContext) {
+public fun paint(mut cat: Cat, new_color: vector<u8>, ctx: &mut TxContext): Cat {
     cat.color = new_color;
-    transfer::transfer(cat, ctx.sender());
-}
+}   
