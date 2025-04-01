@@ -24,7 +24,7 @@ public fun new(name: String, color: String, ctx: &mut TxContext) : Cat{
 
 public fun tchau(cat: Cat) {
     // Challenge: denote that the cat_name and cat_color variables are not going to be used at all in this block
-    let Cat {id, name: _, color: _ } = cat;
+    let Cat {id, name: _cat_name, color: _cat_color } = cat;
     object::delete(id);
 }
 
