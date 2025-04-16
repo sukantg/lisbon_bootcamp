@@ -46,7 +46,9 @@ const swap = async () => {
 const burn = async () => {
     const silveCoinId = "0x4816f8b57baf4ee09d568eb375ef34b3078cb1f3f61e2b944f2df44727a2cd8c";
     const tx = new Transaction();
-
+    
+    // use this if you want to force the transaction to execute on-chain
+    // tx.setGasBudget(1_000_000_000);
     const suiCoin = tx.moveCall({
         target: `${packageId}::silver::burn`,
         arguments: [
@@ -57,6 +59,7 @@ const burn = async () => {
 
     tx.transferObjects([suiCoin], tx.pure.address(keypair.toSuiAddress()));
 
+    // const builtTx = await tx.build({client: client});
 
     const response = await client.signAndExecuteTransaction({
         transaction: tx,
@@ -69,4 +72,24 @@ const burn = async () => {
     console.log(response);
 }
 
-burn()
+// burn()
+
+const devInspectExample = async () => {
+    const tx = new Transaction();
+
+    tx.moveCall({
+        target: `${packageId}::silver::get_rate`,
+        arguments: [
+            tx.object(vault)
+        ]
+    });
+
+    const response = await client.devInspectTransactionBlock({
+        transactionBlock: tx,
+        sender: '0x38e6bd6c23b8cd9b8ea0e18bd45da43406190df850b1d47614fd573eac41a913'
+    });
+
+    console.dir(response, {depth: 7});
+}
+
+// devInspectExample()
