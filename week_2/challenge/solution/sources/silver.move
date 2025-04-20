@@ -69,6 +69,11 @@ public fun burn(vault: &mut SilverVault, coin: Coin<SILVER>, ctx: &mut TxContext
     return_balance.into_coin(ctx)
 }
 
+// This is not required for the solution
+public fun get_rate(vault: &SilverVault): u64 {
+    vault.rate
+}
+
 
 
 #[test_only]
