@@ -10,5 +10,3 @@
 - Write an escrow module that allows users to trade your NFTs securely (without Kiosk)
 
 - Write the necessary PTBs for the escrow module
-
-- Bonus: write tests for your move code
