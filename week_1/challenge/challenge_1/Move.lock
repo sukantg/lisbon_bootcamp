@@ -21,6 +21,10 @@ dependencies = [
 ]
 
 [move.toolchain-version]
+<<<<<<< HEAD
 compiler-version = "1.46.0"
+=======
+compiler-version = "1.45.2"
+>>>>>>> week_1
 edition = "2024.beta"
 flavor = "sui"
