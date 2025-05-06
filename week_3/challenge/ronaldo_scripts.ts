@@ -78,7 +78,7 @@ export const splitAndGetStorageRebate = async () => {
         signer: keypair,
         options: {
             showEffects: true,
-            showObjectChanges: true // include object-level metadata
+            showObjectChanges: true 
         }
     });
 
