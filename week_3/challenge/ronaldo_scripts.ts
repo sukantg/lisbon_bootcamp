@@ -28,7 +28,7 @@ export const mintAndStake = async () => {
     });
 
     tx.moveCall({
-        target: `${packageId}::ronaldo_staking::stake`, // replace with actual module
+        target: `${packageId}::ronaldo_staking::stake`,
         arguments: [minted]
     });
 
@@ -122,7 +122,7 @@ export const exchangeAndUnstake = async () => {
     });
 
     const unstake = tx.moveCall({
-        target: `${packageId}::ronaldo_staking::unstake`, // replace with actual
+        target: `${packageId}::ronaldo_staking::unstake`,
         arguments: [ronaldo]
     });
 
