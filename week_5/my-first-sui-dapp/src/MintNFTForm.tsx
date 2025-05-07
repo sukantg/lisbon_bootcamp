@@ -6,9 +6,11 @@ import {
 import { coinWithBalance, Transaction } from "@mysten/sui/transactions";
 import { SUI_CLOCK_OBJECT_ID } from "@mysten/sui/utils";
 import { Button, Flex } from "@radix-ui/themes";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 export const MintNFTForm = () => {
+  const queryClient = useQueryClient();
   const account = useCurrentAccount();
   const { mutateAsync } = useSignTransaction();
   const suiClient = useSuiClient();
@@ -70,10 +72,18 @@ export const MintNFTForm = () => {
           showObjectChanges: true,
         },
       })
-      .then((res) => {
+      .then(async (res) => {
         console.log("Transaction executed successfully", res.effects);
+        if (res.effects?.status.status !== "success") {
+          console.log("Failed to execute transaction");
+          return;
+        }
         setBytes("");
         setSignature("");
+        await suiClient.waitForTransaction({ digest: res.digest });
+        queryClient.invalidateQueries({
+          queryKey: ["testnet", "getOwnedObjects"],
+        });
       })
       .catch((err) => {
         console.error("Transaction execution failed", err);
