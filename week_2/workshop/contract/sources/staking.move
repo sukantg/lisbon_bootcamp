@@ -151,8 +151,6 @@ public fun unstake_with_df(pool: &mut StakingPool, amount: u64, ctx: &mut TxCont
 }
 
 
-
-
 #[test_only]
 public fun init_testing(ctx: &mut TxContext) {
     init(ctx);
