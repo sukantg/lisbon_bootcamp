@@ -1,5 +1,5 @@
 
-module contracts::challenge {
+module contracts::nftcollection {
 
     use std::string::String;
     use sui::coin::{Self, Coin};
@@ -13,15 +13,13 @@ module contracts::challenge {
     use sui::table::Table;
     use sui::sui::SUI;
 
-    /// Error codes
+
     const EWrongAmount: u64 = 0;
     const ENoSuchAddress: u64 = 1;
     const ETooLate: u64 = 2;
 
-    /// NFT Collection Marker
     public struct COLLECTION has drop {}
 
-    /// Dropout NFT definition
     public struct Dropout has key, store {
         id: UID,
         name: String,
@@ -31,12 +29,10 @@ module contracts::challenge {
         description: String
     }
 
-    /// Admin capabilities
     public struct AdminCap has key {
         id: UID,
     }
 
-    /// Collection state
     public struct State has key {
         id: UID,
         whitelist: Table<address, bool>,
@@ -46,7 +42,6 @@ module contracts::challenge {
         expiration: u64,
     }
 
-    /// RONALDO Coin phantom type
     struct RONALDO_COIN has drop {}
 
     /// Escrow structure
@@ -56,8 +51,6 @@ module contracts::challenge {
         nft: Dropout,
         price: u64
     }
-
-    /// Initialize collection and display
     public entry fun init(otw: COLLECTION, ctx: &mut TxContext) {
         let publisher = package::claim(otw, ctx);
         let keys = vector[
@@ -83,7 +76,7 @@ module contracts::challenge {
         transfer::transfer(cap, sender);
     }
 
-    /// Mint NFT
+    // Mint NFT
     public entry fun admin_mint(
         _: &AdminCap,
         name: String,
@@ -104,7 +97,7 @@ module contracts::challenge {
         }
     }
 
-    /// Airdrop NFT
+    // Airdrop NFT
     public entry fun admin_airdrop(
         _: &AdminCap,
         state: &mut State,
@@ -138,7 +131,7 @@ module contracts::challenge {
         }
     }
 
-    /// Pre-pay with SUI
+    // Pre-pay with SUI
     public entry fun pre_pay(state: &mut State, coin: Coin<SUI>, clock: &Clock, ctx: &TxContext) {
         assert!(coin::value(&coin) == state.initial_price, EWrongAmount);
         assert!(clock.timestamp_ms() < state.expiration, ETooLate);
@@ -147,7 +140,7 @@ module contracts::challenge {
         state.pre_paid.add(user, true);
     }
 
-    /// Airdrop RONALDO coin to recipients
+    // Airdrop RONALDO coin to recipients
     public entry fun airdrop_ronaldo_to_nfts(
         _: &AdminCap,
         mut coin: Coin<RONALDO_COIN>,
@@ -161,7 +154,7 @@ module contracts::challenge {
         }
     }
 
-    /// Create escrow
+    // Create escrow
     public entry fun create_escrow(
         nft: Dropout,
         price: u64,
@@ -175,7 +168,7 @@ module contracts::challenge {
         }
     }
 
-    /// Cancel escrow
+    // Cancel escrow
     public entry fun cancel_escrow(
         esc: Escrow,
         ctx: &mut TxContext
@@ -185,7 +178,7 @@ module contracts::challenge {
         object::delete(esc.id);
     }
 
-    /// Buy from escrow
+    // Buy from escrow
     public entry fun buy(
         esc: Escrow,
         mut payment: Coin<SUI>,
